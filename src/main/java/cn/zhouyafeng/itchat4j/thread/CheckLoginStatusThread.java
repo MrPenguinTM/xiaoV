@@ -1,5 +1,6 @@
 package cn.zhouyafeng.itchat4j.thread;
 
+import org.androidtest.xiaoV.publicutil.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class CheckLoginStatusThread implements Runnable {
 			if (t1 - core.getLastNormalRetcodeTime() > 60 * 1000) { // 超过60秒，判为离线
 				core.setAlive(false);
 				LOG.info("微信已离线");
+				MailUtil.sendMail("微信已离线");
 			}
 			SleepUtils.sleep(10 * 1000); // 休眠10秒
 		}
