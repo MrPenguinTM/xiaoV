@@ -24,11 +24,15 @@
 ||日常提醒（文字形式）|
 ||服务器实时存档每天的打卡数据、图片、视频|
 ||聊天对话（对接的图灵机器人，@机器人 触发）|
+||微信离线后发邮件提醒重新上线|
+
 
 # 怎么使用
 + 下载项目源码
 + 修改config类，对指定群进行组件配置
 + 编译成jar包
++ 将[src/main/resources/](https://github.com/MrPenguinTM/xiaoV/blob/master/src/main/resources/)下的[sys_config.properties](https://github.com/MrPenguinTM/xiaoV/blob/master/src/main/resources/sys_config.properties)和[log4j.properties](https://github.com/MrPenguinTM/xiaoV/blob/master/src/main/resources/log4j.properties)放置在跟JAR包同个目录下
++ 若需邮件功能，请修改[sys_config.properties](https://github.com/MrPenguinTM/xiaoV/blob/master/src/main/resources/sys_config.properties)里邮件相关的配置
 + 命令行下java -jar xxx.jar运行即可。
 
 注意:
