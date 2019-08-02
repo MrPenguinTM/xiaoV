@@ -43,6 +43,9 @@ public class Config {
 		whiteList.put("张荆钗", new File(System.getProperty("user.home")
 				+ File.separator + "Desktop" + File.separator
 				+ "2019个人检视清单@张荆钗.xlsx"));
+		whiteList.put("shine", new File(System.getProperty("user.home")
+				+ File.separator + "Desktop" + File.separator
+				+ "DAILY CHECK LIST @shine.xlsx"));
 		group.addAction(ActionFactory.createDailySelfReflectionAction(
 				whiteList, true));// 配置该群有每日反思打卡功能，需要配置反思人及对应的反思excel文件地址
 
