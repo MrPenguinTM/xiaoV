@@ -95,10 +95,6 @@ public class LifeRoutineAction extends Action {
 					break;
 				}
 			}
-			if (currentGroupRedPacketCount != -1) {
-				LOG.error("action: " + "在grouplist里找不到名为"
-						+ currentGroupNickName + "的群。" + groupList);
-			}
 		}
 		return null;
 	}

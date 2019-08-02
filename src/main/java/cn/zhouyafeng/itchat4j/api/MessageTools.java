@@ -11,6 +11,7 @@ import java.util.Random;
 
 import javax.activation.MimetypesFileTypeMap;
 
+import org.androidtest.xiaoV.publicutil.LogUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -189,6 +190,7 @@ public class MessageTools {
 				return true;
 			}
 		}
+		LogUtil.MSG.error("sendGroupMsgByNickName: text:"+text+",groupnickname:"+nickName+",return false");
 		return false;
 
 	}
