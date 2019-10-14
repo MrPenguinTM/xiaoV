@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.androidtest.xiaoV.data.Constant;
 import org.androidtest.xiaoV.data.Group;
+import org.androidtest.xiaoV.publicutil.DateUtil;
 import org.androidtest.xiaoV.publicutil.LogUtil;
 import org.androidtest.xiaoV.publicutil.StringUtil;
 import org.androidtest.xiaoV.publicutil.WeekHelper;
@@ -67,13 +68,13 @@ public class WholeWeekStepClockIn extends ClockIn {
 			LogUtil.MSG.warn("action: " + result);
 			return result;
 		}
-		// if (!DateUtil.isSunday()) {
-		// result = "@"
-		// + senderNickName
-		// + " 周步数打卡请在周天0:00-24:00之间打卡。符合群规达标才打卡，不符群规不达标不打卡。今天非周天，打卡失败。";
-		// LogUtil.MSG.warn("action: " + result);
-		// return result;
-		// }
+		if (!DateUtil.isSunday()) {
+			result = "@"
+					+ senderNickName
+					+ " 周步数打卡请在周天0:00-24:00之间打卡。符合群规达标才打卡，不符群规不达标不打卡。今天非周天，打卡失败。";
+			LogUtil.MSG.warn("action: " + result);
+			return result;
+		}
 		String wstepfilename = Constant.SIMPLE_DAY_FORMAT_FILE
 				.format(new Date()) + "-" + fileUserName + ".wstep";
 		File wstepfile = new File(Constant.getCurrentWeekSavePath()
