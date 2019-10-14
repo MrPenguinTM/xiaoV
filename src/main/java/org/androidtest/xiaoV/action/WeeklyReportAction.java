@@ -15,6 +15,7 @@ import org.androidtest.xiaoV.data.Group;
 import org.androidtest.xiaoV.publicutil.LogUtil;
 import org.androidtest.xiaoV.publicutil.StringUtil;
 import org.androidtest.xiaoV.publicutil.WeekHelper;
+import org.apache.log4j.Logger;
 
 import cn.zhouyafeng.itchat4j.api.MessageTools;
 import cn.zhouyafeng.itchat4j.api.WechatTools;
@@ -39,6 +40,8 @@ public class WeeklyReportAction extends Action {
 		}
 	};
 
+	protected Logger LOG = Logger.getLogger(WeeklyReportAction.class);
+
 	private static final String actionName = "每周统计播报";
 
 	private int dailyStep_weeklyLimitTimes = -1;
@@ -46,6 +49,9 @@ public class WeeklyReportAction extends Action {
 	private int weeklySport_weeklyLimitTimes = -1;
 
 	private final int autoReportTime = 2359;
+
+	private boolean supportStepAction = true;
+	private boolean supportSportAction = true;
 
 	public WeeklyReportAction(int dailyStep_weeklyLimitTimes,
 			int weeklySport_weeklyLimitTimes) {
@@ -122,24 +128,32 @@ public class WeeklyReportAction extends Action {
 						if (result == null) {
 							result = WeekHelper.getCurrentWeek() + "\n";
 							result = result + list.get(i) + ":";
-							if (supportSport) {
-								result = result + "	运动" + countsport + "/"
-										+ getWeeklySport_weeklyLimitTimes();
+							if (supportSportAction) {
+								if (supportSport) {
+									result = result + "	运动" + countsport + "/"
+											+ getWeeklySport_weeklyLimitTimes();
+								}
 							}
-							if (supportStep) {
-								result = result + "	步数" + countstep + "/"
-										+ getDailyStep_weeklyLimitTimes();
+							if (supportStepAction) {
+								if (supportStep) {
+									result = result + "	步数" + countstep + "/"
+											+ getDailyStep_weeklyLimitTimes();
+								}
 							}
 							result = result + "；\n";
 						} else {
 							result = result + list.get(i) + ":";
-							if (supportSport) {
-								result = result + "	运动" + countsport + "/"
-										+ getWeeklySport_weeklyLimitTimes();
+							if (supportSportAction) {
+								if (supportSport) {
+									result = result + "	运动" + countsport + "/"
+											+ getWeeklySport_weeklyLimitTimes();
+								}
 							}
-							if (supportStep) {
-								result = result + "	步数" + countstep + "/"
-										+ getDailyStep_weeklyLimitTimes();
+							if (supportStepAction) {
+								if (supportStep) {
+									result = result + "	步数" + countstep + "/"
+											+ getDailyStep_weeklyLimitTimes();
+								}
 							}
 							result = result + "；\n";
 						}
@@ -152,6 +166,14 @@ public class WeeklyReportAction extends Action {
 					List<Action> actions = group.getActionList();
 					for (Action a : actions) {
 						if (a.getClass().getGenericSuperclass() == ClockIn.class) {
+							if (!supportStepAction
+									&& a.getClass() == WeeklyStepClockIn.class) {
+								continue;
+							}
+							if (!supportSportAction
+									&& a.getClass() == WeeklySportClockIn.class) {
+								continue;
+							}
 							String content = a.report(group);
 							if (StringUtil.ifNotNullOrEmpty(content)) {
 								content = "\n" + content;
@@ -195,8 +217,19 @@ public class WeeklyReportAction extends Action {
 			LogUtil.MSG.info("notify: " + currentGroup.getGroupNickName()
 					+ ": report " + true);
 			return true;
+		} else if (currentTime == getSleepRemindTime()) {
+			MessageTools.sendGroupMsgByNickName(currentTimeString
+					+ "了，一天该收尾咯，大家当天有运动的，记得及时打下卡噢。",
+					currentGroup.getGroupNickName());
+			LOG.info("notify: " + currentGroup.getGroupNickName() + ": report "
+					+ true);
+			return true;
 		}
 		return false;
+	}
+
+	private int getSleepRemindTime() {// 默认每天22：45提醒打卡
+		return 2245;
 	}
 
 	@Override
@@ -210,10 +243,12 @@ public class WeeklyReportAction extends Action {
 				+ dailyStep_weeklyLimitTimes);
 		if (dailyStep_weeklyLimitTimes >= 0) {
 			this.dailyStep_weeklyLimitTimes = dailyStep_weeklyLimitTimes;
+			supportStepAction = true;
 		} else {
-			throw new RuntimeException(
-					"setDailyStep_weeklyLimitTimes: out of range: "
-							+ dailyStep_weeklyLimitTimes);
+			supportStepAction = false;
+			// throw new RuntimeException(
+			// "setDailyStep_weeklyLimitTimes: out of range: "
+			// + dailyStep_weeklyLimitTimes);
 		}
 
 	}
@@ -224,10 +259,12 @@ public class WeeklyReportAction extends Action {
 				+ weeklySport_weeklyLimitTimes);
 		if (weeklySport_weeklyLimitTimes >= 0) {
 			this.weeklySport_weeklyLimitTimes = weeklySport_weeklyLimitTimes;
+			supportSportAction = true;
 		} else {
-			throw new RuntimeException(
-					"setWeeklySport_weeklyLimitTimes: out of range: "
-							+ weeklySport_weeklyLimitTimes);
+			supportSportAction = false;
+			// throw new RuntimeException(
+			// "setWeeklySport_weeklyLimitTimes: out of range: "
+			// + weeklySport_weeklyLimitTimes);
 		}
 
 	}
