@@ -38,7 +38,7 @@ public class WeeklyStepClockIn extends ClockIn {
 		}
 	};
 
-	private static final String actionName = "每周步数打卡";
+	private static final String actionName = "每周步数打卡(day)";
 
 	public WeeklyStepClockIn() {
 		this(7);

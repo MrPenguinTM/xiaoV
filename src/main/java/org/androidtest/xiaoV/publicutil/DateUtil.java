@@ -32,6 +32,12 @@ public class DateUtil {
 		return c.getTime();
 	}
 
+	public static boolean isSunday() {
+		Calendar calendar = Calendar.getInstance();
+		int day = calendar.get(Calendar.DAY_OF_WEEK);// 从星期天开始，依次为1、2、3……到星期六为7。
+		return day == 1;
+	}
+
 	/**
 	 * 获取一年开始的第一周的周一 第一周如果有四天或以上就算是该年的第一周, 否则就是上一年的最后一周(用于跨年判断第一周开始时间)
 	 * 

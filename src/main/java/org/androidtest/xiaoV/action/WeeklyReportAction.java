@@ -10,6 +10,7 @@ import java.util.Map;
 import org.androidtest.xiaoV.action.ClockIn.ClockIn;
 import org.androidtest.xiaoV.action.ClockIn.WeeklySportClockIn;
 import org.androidtest.xiaoV.action.ClockIn.WeeklyStepClockIn;
+import org.androidtest.xiaoV.action.ClockIn.WholeWeekStepClockIn;
 import org.androidtest.xiaoV.data.Constant;
 import org.androidtest.xiaoV.data.Group;
 import org.androidtest.xiaoV.publicutil.LogUtil;
@@ -48,16 +49,35 @@ public class WeeklyReportAction extends Action {
 
 	private int weeklySport_weeklyLimitTimes = -1;
 
+	private int wholeweeklyStep_weeklyLimitTimes = -1;
+
 	private final int autoReportTime = 2359;
 
 	private boolean supportStepAction = true;
 	private boolean supportSportAction = true;
+	private boolean supportWStepAction = true;
 
 	public WeeklyReportAction(int dailyStep_weeklyLimitTimes,
-			int weeklySport_weeklyLimitTimes) {
+			int weeklySport_weeklyLimitTimes,
+			int wholeweeklyStep_weeklyLimitTimes) {
 		super(actionName, WEEKLY_REPORT_VAILD_KEYWORD_LIST);
 		setDailyStep_weeklyLimitTimes(dailyStep_weeklyLimitTimes);
 		setWeeklySport_weeklyLimitTimes(weeklySport_weeklyLimitTimes);
+		setWholeWeekStep_weeklyLimitTimes(wholeweeklyStep_weeklyLimitTimes);
+	}
+
+	private void setWholeWeekStep_weeklyLimitTimes(int i) {
+		LogUtil.MSG.debug("setWholeWeekStep_weeklyLimitTimes: " + i);
+		if (i >= 0) {
+			this.wholeweeklyStep_weeklyLimitTimes = 1;
+			supportWStepAction = true;
+		} else {
+			supportWStepAction = false;
+		}
+	}
+
+	private int getWholeWeekStep_weeklyLimitTimes() {
+		return wholeweeklyStep_weeklyLimitTimes;
 	}
 
 	@Override
@@ -82,18 +102,24 @@ public class WeeklyReportAction extends Action {
 		if (group != null) {
 			boolean supportSport = false;
 			boolean supportStep = false;
+			boolean supportWStep = false;
 			if (group.containsAction(WeeklySportClockIn.class)) {
 				supportSport = true;
 			}
 			if (group.containsAction(WeeklyStepClockIn.class)) {
 				supportStep = true;
 			}
-			if (supportSport == true || supportStep == true) {
+			if (group.containsAction(WholeWeekStepClockIn.class)) {
+				supportWStep = true;
+			}
+			if (supportSport == true || supportStep == true
+					|| supportWStep == true) {
 				if (dir.isDirectory()) {
 					File[] array = dir.listFiles();
 					for (int i = 0; i < list.size(); i++) {
 						int countstep = 0;
 						int countsport = 0;
+						int countwstep = 0;
 						String name = StringUtil.filter(list.get(i));
 						if (StringUtil.ifNullOrEmpty(name)) {
 							error404Name = error404Name + "@" + list.get(i)
@@ -124,6 +150,19 @@ public class WeeklyReportAction extends Action {
 													"-" + name + "."))) {
 								countsport++;
 							}
+
+							if ((array[j].isFile()
+									&& array[j].getName().endsWith(".wstep") && array[j]
+									.getName()
+									.contains("-" + list.get(i) + "."))
+									|| (array[j].isFile()
+											&& array[j].getName().endsWith(
+													".wstep") && array[j]
+											.getName().contains(
+													"-" + name + "."))) {
+								countwstep++;
+							}
+
 						}
 						if (result == null) {
 							result = WeekHelper.getCurrentWeek() + "\n";
@@ -140,6 +179,15 @@ public class WeeklyReportAction extends Action {
 											+ getDailyStep_weeklyLimitTimes();
 								}
 							}
+							if (supportWStepAction) {
+								if (supportWStep) {
+									result = result
+											+ "	周步数"
+											+ countwstep
+											+ "/"
+											+ getWholeWeekStep_weeklyLimitTimes();
+								}
+							}
 							result = result + "；\n";
 						} else {
 							result = result + list.get(i) + ":";
@@ -153,6 +201,15 @@ public class WeeklyReportAction extends Action {
 								if (supportStep) {
 									result = result + "	步数" + countstep + "/"
 											+ getDailyStep_weeklyLimitTimes();
+								}
+							}
+							if (supportWStepAction) {
+								if (supportWStep) {
+									result = result
+											+ "	周步数"
+											+ countwstep
+											+ "/"
+											+ getWholeWeekStep_weeklyLimitTimes();
 								}
 							}
 							result = result + "；\n";
@@ -172,6 +229,10 @@ public class WeeklyReportAction extends Action {
 							}
 							if (!supportSportAction
 									&& a.getClass() == WeeklySportClockIn.class) {
+								continue;
+							}
+							if (!supportWStepAction
+									&& a.getClass() == WholeWeekStepClockIn.class) {
 								continue;
 							}
 							String content = a.report(group);

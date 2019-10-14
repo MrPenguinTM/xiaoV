@@ -13,6 +13,7 @@ import org.androidtest.xiaoV.action.MenuAction;
 import org.androidtest.xiaoV.action.WeeklyReportAction;
 import org.androidtest.xiaoV.action.ClockIn.WeeklySportClockIn;
 import org.androidtest.xiaoV.action.ClockIn.WeeklyStepClockIn;
+import org.androidtest.xiaoV.action.ClockIn.WholeWeekStepClockIn;
 import org.androidtest.xiaoV.publicutil.DateUtil;
 
 public class ActionFactory {
@@ -33,6 +34,11 @@ public class ActionFactory {
 
 	public static WeeklyStepClockIn createDailyStepClockIn() {
 		WeeklyStepClockIn action = new WeeklyStepClockIn(7);
+		return action;
+	}
+
+	public static WholeWeekStepClockIn createWholeWeekStepClockIn() {
+		WholeWeekStepClockIn action = new WholeWeekStepClockIn();
 		return action;
 	}
 
@@ -75,7 +81,16 @@ public class ActionFactory {
 	public static WeeklyReportAction createWeeklyReportClockInAction(
 			int dailyStep_weeklyLimitTimes, int weeklySport_weeklyLimitTimes) {
 		WeeklyReportAction action = new WeeklyReportAction(
-				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes);
+				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes, -1);
+		return action;
+	}
+
+	public static WeeklyReportAction createWeeklyReportClockInAction(
+			int dailyStep_weeklyLimitTimes, int weeklySport_weeklyLimitTimes,
+			int wholeweeklyStep_weeklyLimitTimes) {
+		WeeklyReportAction action = new WeeklyReportAction(
+				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes,
+				wholeweeklyStep_weeklyLimitTimes);
 		return action;
 	}
 
