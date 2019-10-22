@@ -101,97 +101,110 @@ public class WholeWeekStepClockIn extends ClockIn {
 
 	@Override
 	public boolean notify(Group currentGroup) {
-		Date currentDate = new Date();
-		int currentTime = Integer.parseInt(new SimpleDateFormat("HHmm")
-				.format(currentDate));
-		String currentTimeString = new SimpleDateFormat("HH:mm")
-				.format(currentDate);
-		for (Integer time : autoReportTime) {
-			if (currentTime == time) {
+		if (DateUtil.isSunday()) {
+			Date currentDate = new Date();
+			int currentTime = Integer.parseInt(new SimpleDateFormat("HHmm")
+					.format(currentDate));
+			String currentTimeString = new SimpleDateFormat("HH:mm")
+					.format(currentDate);
+			for (Integer time : autoReportTime) {
+				if (currentTime == time) {
+					String currentGroupNickName = currentGroup
+							.getGroupNickName();
+					MessageTools
+							.sendGroupMsgByNickName(
+									"今天需要进行本周步数打卡，符合群规达标才打卡，不符群规不达标不打卡。还没打卡的小伙伴记得及时打卡噢！",
+									currentGroupNickName);
+					LogUtil.MSG.info("notify: "
+							+ currentGroup.getGroupNickName() + ": report "
+							+ true);
+					return true;
+				}
+			}
+			int startTime = 0;
+			int endTime = 2330;
+			if (currentTime == startTime) {
 				String currentGroupNickName = currentGroup.getGroupNickName();
-				MessageTools.sendGroupMsgByNickName(
-						"今天需要进行本周步数打卡，符合群规达标才打卡，不符群规不达标不打卡。还没打卡的小伙伴记得及时打卡噢！",
-						currentGroupNickName);
+				MessageTools
+						.sendGroupMsgByNickName(
+								WeekHelper.getCurrentWeek()
+										+ "周步数打卡功能已经开启！今天需要进行本周步数打卡，还没打卡的小伙伴记得及时打卡噢！(符合群规达标才打卡，不符群规不达标不打卡)",
+								currentGroupNickName);
+				LogUtil.MSG.info("notify: " + currentGroup.getGroupNickName()
+						+ ": report " + true);
+				return true;
+			} else if (currentTime == endTime) {
+				String currentGroupNickName = currentGroup.getGroupNickName();
+				MessageTools
+						.sendGroupMsgByNickName(
+								WeekHelper.getCurrentWeek()
+										+ "周步数打卡功能将在0点关闭！还没打卡的小伙伴赶紧及时打卡噢！(符合群规达标才打卡，不符群规不达标不打卡)",
+								currentGroupNickName);
 				LogUtil.MSG.info("notify: " + currentGroup.getGroupNickName()
 						+ ": report " + true);
 				return true;
 			}
-		}
-		int startTime = 0;
-		int endTime = 2330;
-		if (currentTime == startTime) {
-			String currentGroupNickName = currentGroup.getGroupNickName();
-			MessageTools
-					.sendGroupMsgByNickName(
-							WeekHelper.getCurrentWeek()
-									+ "周步数打卡功能已经开启！今天需要进行本周步数打卡，还没打卡的小伙伴记得及时打卡噢！(符合群规达标才打卡，不符群规不达标不打卡)",
-							currentGroupNickName);
-			LogUtil.MSG.info("notify: " + currentGroup.getGroupNickName()
-					+ ": report " + true);
-			return true;
-		} else if (currentTime == endTime) {
-			String currentGroupNickName = currentGroup.getGroupNickName();
-			MessageTools.sendGroupMsgByNickName(WeekHelper.getCurrentWeek()
-					+ "周步数打卡功能将在0点关闭！还没打卡的小伙伴赶紧及时打卡噢！(符合群规达标才打卡，不符群规不达标不打卡)",
-					currentGroupNickName);
-			LogUtil.MSG.info("notify: " + currentGroup.getGroupNickName()
-					+ ": report " + true);
-			return true;
 		}
 		return false;
 	}
 
 	@Override
 	public String report(Group group) {
-		LogUtil.MSG.debug("report: " + this.getClass().getSimpleName() + ", "
-				+ group.getGroupNickName());
-		String currentGroupNickName = group.getGroupNickName();
 		String result = null;
-		File dir = new File(Constant.getCurrentWeekSavePath());
-		List<String> list = WechatTools
-				.getMemberListByGroupNickName2(currentGroupNickName);
-		LogUtil.MSG.debug("report: " + currentGroupNickName + "群成员:"
-				+ list.toString());
-		String errorSport = null;
-		String error404Name = "";
-		if (dir.isDirectory()) {
-			File[] array = dir.listFiles();
-			for (int i = 0; i < list.size(); i++) {
-				int countwstep = 0;
-				String name = StringUtil.filter(list.get(i));
-				if (StringUtil.ifNullOrEmpty(name)) {
-					error404Name = error404Name + "@" + list.get(i) + " ";
-					continue;
-				}
-				for (int j = 0; j < array.length; j++) {
-					if ((array[j].isFile()
-							&& array[j].getName().endsWith(".wstep") && array[j]
-							.getName().contains("-" + list.get(i) + "."))
-							|| (array[j].isFile()
-									&& array[j].getName().endsWith(".wstep") && array[j]
-									.getName().contains("-" + name + "."))) {
-						countwstep++;
+		if (DateUtil.isSunday()) {
+			LogUtil.MSG.debug("report: " + this.getClass().getSimpleName()
+					+ ", " + group.getGroupNickName());
+			String currentGroupNickName = group.getGroupNickName();
+
+			File dir = new File(Constant.getCurrentWeekSavePath());
+			List<String> list = WechatTools
+					.getMemberListByGroupNickName2(currentGroupNickName);
+			LogUtil.MSG.debug("report: " + currentGroupNickName + "群成员:"
+					+ list.toString());
+			String errorSport = null;
+			String error404Name = "";
+			if (dir.isDirectory()) {
+				File[] array = dir.listFiles();
+				for (int i = 0; i < list.size(); i++) {
+					int countwstep = 0;
+					String name = StringUtil.filter(list.get(i));
+					if (StringUtil.ifNullOrEmpty(name)) {
+						error404Name = error404Name + "@" + list.get(i) + " ";
+						continue;
+					}
+					for (int j = 0; j < array.length; j++) {
+						if ((array[j].isFile()
+								&& array[j].getName().endsWith(".wstep") && array[j]
+								.getName().contains("-" + list.get(i) + "."))
+								|| (array[j].isFile()
+										&& array[j].getName()
+												.endsWith(".wstep") && array[j]
+										.getName().contains("-" + name + "."))) {
+							countwstep++;
+						}
+					}
+					if (countwstep < getWeeklyLimitTimes()) {
+						if (errorSport == null) {
+							errorSport = "@" + list.get(i) + " ";
+						} else {
+							errorSport = errorSport + "@" + list.get(i) + " ";
+						}
 					}
 				}
-				if (countwstep < getWeeklyLimitTimes()) {
-					if (errorSport == null) {
-						errorSport = "@" + list.get(i) + " ";
-					} else {
-						errorSport = errorSport + "@" + list.get(i) + " ";
-					}
+				if (errorSport == null) {
+					errorSport = "无";
 				}
+				result = "------本周步数未达标：-------\n" + errorSport;
+				if (!StringUtil.ifNullOrEmpty(error404Name)) {
+					result = result + "\n如下（微信名含非法字符无法统计: " + error404Name
+							+ "）";
+				}
+			} else {
+				LogUtil.MSG.error("report: " + "error:" + dir.getAbsolutePath()
+						+ "非文件夹路径！");
 			}
-			if (errorSport == null) {
-				errorSport = "无";
-			}
-			result = "------本周步数未达标：-------\n" + errorSport;
-			if (!StringUtil.ifNullOrEmpty(error404Name)) {
-				result = result + "\n如下（微信名含非法字符无法统计: " + error404Name + "）";
-			}
-		} else {
-			LogUtil.MSG.error("report: " + "error:" + dir.getAbsolutePath()
-					+ "非文件夹路径！");
 		}
 		return result;
 	}
+
 }
