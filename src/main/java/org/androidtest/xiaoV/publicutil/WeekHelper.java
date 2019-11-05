@@ -29,6 +29,24 @@ public class WeekHelper {
 		return result;
 	}
 
+	public static String getLastWeek() {
+		String current = getCurrentDateStartWeek();
+		List<Week> weeks = WeekHelper.getWeeksByCurrentYear();
+		String result = null;
+		for (int i = 0; i < weeks.size(); i++) {
+			if (weeks.get(i).toString().startsWith(current)) {
+				if (i == 0) {
+					result = weeks.get(i).toString();
+					break;
+				} else {
+					result = weeks.get(i - 1).toString();
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
 	/**
 	 * 获取当前时间所在的年份
 	 * 

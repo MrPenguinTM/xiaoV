@@ -30,6 +30,13 @@ public class Constant {
 
 	}
 
+	public static String getLastWeekSavePath() {
+		return FileOperatorUtil.mkdirs(
+				getDataSavePath() + File.separator + WeekHelper.getLastWeek())
+				.getAbsolutePath();
+
+	}
+
 	public static String getCurrentWeekSavePath() {
 		return FileOperatorUtil.mkdirs(
 				getDataSavePath() + File.separator

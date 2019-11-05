@@ -8,6 +8,7 @@ import org.androidtest.xiaoV.action.Action;
 import org.androidtest.xiaoV.action.DailySelfReflectionAction;
 import org.androidtest.xiaoV.action.GroupAttentionAction;
 import org.androidtest.xiaoV.action.GroupRuleAction;
+import org.androidtest.xiaoV.action.LastWeeklyReportAction;
 import org.androidtest.xiaoV.action.LifeRoutineAction;
 import org.androidtest.xiaoV.action.MenuAction;
 import org.androidtest.xiaoV.action.RecallSportAction;
@@ -97,10 +98,26 @@ public class ActionFactory {
 		return action;
 	}
 
+	public static LastWeeklyReportAction createLastWeeklyReportClockInAction(
+			int dailyStep_weeklyLimitTimes, int weeklySport_weeklyLimitTimes) {
+		LastWeeklyReportAction action = new LastWeeklyReportAction(
+				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes, -1);
+		return action;
+	}
+
 	public static WeeklyReportAction createWeeklyReportClockInAction(
 			int dailyStep_weeklyLimitTimes, int weeklySport_weeklyLimitTimes,
 			int wholeweeklyStep_weeklyLimitTimes) {
 		WeeklyReportAction action = new WeeklyReportAction(
+				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes,
+				wholeweeklyStep_weeklyLimitTimes);
+		return action;
+	}
+
+	public static LastWeeklyReportAction createLastWeeklyReportClockInAction(
+			int dailyStep_weeklyLimitTimes, int weeklySport_weeklyLimitTimes,
+			int wholeweeklyStep_weeklyLimitTimes) {
+		LastWeeklyReportAction action = new LastWeeklyReportAction(
 				dailyStep_weeklyLimitTimes, weeklySport_weeklyLimitTimes,
 				wholeweeklyStep_weeklyLimitTimes);
 		return action;
