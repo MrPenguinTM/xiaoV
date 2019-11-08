@@ -16,6 +16,15 @@ public class Group {
 	private String groupNickName;
 	private String admin;
 	private List<Action> actionList = new ArrayList<>();
+	private boolean isRobotChat = true;
+
+	public boolean isRobotChat() {
+		return isRobotChat;
+	}
+
+	public void setRobotChat(boolean isRobotChat) {
+		this.isRobotChat = isRobotChat;
+	}
 
 	public Group(String groupNickName, String admin) {
 		LogUtil.MSG.debug("Group: init: nickName: " + groupNickName
@@ -123,7 +132,8 @@ public class Group {
 	@Override
 	public String toString() {
 		return "Group [groupId=" + groupId + ", groupNickName=" + groupNickName
-				+ ", admin=" + admin + ", actionList=" + actionList + "]";
+				+ ", admin=" + admin + ", actionList=" + actionList
+				+ ", isRobotChat=" + isRobotChat + "]";
 	}
 
 	// public Action getActionFromVaildKeywords(String keyword) {
