@@ -29,6 +29,19 @@ public class WeekHelper {
 		return result;
 	}
 
+	public static int getCurrentDayOfWeek() {
+		final int dayNames[] = { Calendar.SUNDAY, Calendar.MONDAY,
+				Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+				Calendar.FRIDAY, Calendar.SATURDAY };
+		Calendar calendar = Calendar.getInstance();
+		Date date = new Date();
+		calendar.setTime(date);
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+		if (dayOfWeek < 0)
+			dayOfWeek = 0;
+		return dayNames[dayOfWeek];
+	}
+
 	public static String getLastWeek() {
 		String current = getCurrentDateStartWeek();
 		List<Week> weeks = WeekHelper.getWeeksByCurrentYear();

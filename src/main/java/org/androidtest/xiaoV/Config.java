@@ -71,6 +71,7 @@ public class Config {
 		// //////////////////////////////////////////////
 		Group group3 = new Group("TEST123", Constant.DEFAULT_ADMIN);// 新建群信息
 		group3.addAction(ActionFactory.createMenuAction());// 配置该群有菜单功能
+		group3.addAction(ActionFactory.createComplainingClockIn());
 		group3.addAction(ActionFactory.createGroupRuleAction(
 				group3.getGroupNickName(),
 				new File(System.getProperty("user.home") + File.separator
@@ -136,20 +137,17 @@ public class Config {
 				2));// 配置该群有周报功能，周报功能会统计并播报运动打卡和每日步数数据
 		group7.addAction(ActionFactory.createWeeklyReportClockInAction(-1, 2));// 配置该群有周报功能，周报功能会统计并播报运动打卡和每日步数数据
 		// //////////////////////////////////////////////
-		// Group group8 = new Group("V1.0每周跑步10公里", Constant.DEFAULT_ADMIN);//
+		Group group8 = new Group("誉山5区入住群", Constant.DEFAULT_ADMIN);//
 		// 新建群信息
-		// group8.addAction(ActionFactory.createMenuAction());// 配置该群有菜单功能
-		// group8.addAction(ActionFactory.createGroupRuleAction(
-		// group8.getGroupNickName(),
-		// new File(System.getProperty("user.home") + File.separator
-		// + "Desktop" + File.separator + "V1.0每周跑步10公里.jpg")));// 配置该群有规则提醒功能
-		// group8.addAction(ActionFactory.createRecallSportAction());
-		// group8.addAction(ActionFactory.createWeeklySportClockIn(1, true));//
-		// 配置该群有运动打卡功能，要求一周1次打卡
-		// // group4.addAction(ActionFactory.createDailyStepClockIn(2, true));//
-		// // 配置该群有每日步数功能
-		// group8.addAction(ActionFactory.createWeeklyReportClockInAction(-1,
-		// 1));// 配置该群有周报功能，周报功能会统计并播报运动打卡和每日步数数据
+		group8.addAction(ActionFactory.createMenuAction());// 配置该群有菜单功能
+		group8.addAction(ActionFactory.createComplainingClockIn());
+		group8.setRobotChat(false);
+		group8.setRobotDealWithUnknowMsg(false);
+		// //////////////////////////////////////////////
+		Group group9 = new Group("研发管理-测试开发组", Constant.DEFAULT_ADMIN);//
+		// 新建群信息
+		group9.addAction(ActionFactory.createMenuAction());// 配置该群有菜单功能
+		group9.addAction(ActionFactory.createSDETWeeklyReminderAction());
 		// /////////////////统一ADD 进 GROUP////////////////////////////
 		Constant.groupList.add(group);
 		Constant.groupList.add(group2);
@@ -158,6 +156,7 @@ public class Config {
 		Constant.groupList.add(group6);
 		Constant.groupList.add(group5);
 		Constant.groupList.add(group7);
-		// Constant.groupList.add(group8);
+		Constant.groupList.add(group8);
+		Constant.groupList.add(group9);
 	}
 }

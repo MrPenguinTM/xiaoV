@@ -68,8 +68,10 @@ public class MessageHandler {
 				if (group.isRobotChat()) {
 					result = TulingRobot.chat(nickName, content);
 				}
-				if (StringUtil.ifNullOrEmpty(result)) {
-					result = "我听不懂，需要\"菜单\"请回复菜单";
+				if (group.isRobotDealWithUnknowMsg()) {
+					if (StringUtil.ifNullOrEmpty(result)) {
+						result = "我听不懂，需要\"菜单\"请回复菜单";
+					}
 				}
 
 			}

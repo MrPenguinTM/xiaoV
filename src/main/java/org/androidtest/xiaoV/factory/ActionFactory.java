@@ -13,6 +13,7 @@ import org.androidtest.xiaoV.action.LifeRoutineAction;
 import org.androidtest.xiaoV.action.MenuAction;
 import org.androidtest.xiaoV.action.RecallSportAction;
 import org.androidtest.xiaoV.action.RecallStepAction;
+import org.androidtest.xiaoV.action.SDETWeeklyReminderAction;
 import org.androidtest.xiaoV.action.WeeklyReportAction;
 import org.androidtest.xiaoV.action.ClockIn.ComplainingClockIn;
 import org.androidtest.xiaoV.action.ClockIn.WeeklySportClockIn;
@@ -38,6 +39,11 @@ public class ActionFactory {
 
 	public static WeeklyStepClockIn createDailyStepClockIn() {
 		WeeklyStepClockIn action = new WeeklyStepClockIn(7);
+		return action;
+	}
+
+	public static SDETWeeklyReminderAction createSDETWeeklyReminderAction() {
+		SDETWeeklyReminderAction action = new SDETWeeklyReminderAction();
 		return action;
 	}
 

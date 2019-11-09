@@ -17,6 +17,15 @@ public class Group {
 	private String admin;
 	private List<Action> actionList = new ArrayList<>();
 	private boolean isRobotChat = true;
+	private boolean isRobotDealWithUnknowMsg = true;
+
+	public boolean isRobotDealWithUnknowMsg() {
+		return isRobotDealWithUnknowMsg;
+	}
+
+	public void setRobotDealWithUnknowMsg(boolean isRobotDealWithUnknowMsg) {
+		this.isRobotDealWithUnknowMsg = isRobotDealWithUnknowMsg;
+	}
 
 	public boolean isRobotChat() {
 		return isRobotChat;
@@ -133,7 +142,9 @@ public class Group {
 	public String toString() {
 		return "Group [groupId=" + groupId + ", groupNickName=" + groupNickName
 				+ ", admin=" + admin + ", actionList=" + actionList
-				+ ", isRobotChat=" + isRobotChat + "]";
+				+ ", isRobotChat=" + isRobotChat
+				+ ", isRobotDealWithUnknowMsg=" + isRobotDealWithUnknowMsg
+				+ "]";
 	}
 
 	// public Action getActionFromVaildKeywords(String keyword) {
