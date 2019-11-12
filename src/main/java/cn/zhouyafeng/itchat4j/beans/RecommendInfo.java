@@ -34,108 +34,108 @@ public class RecommendInfo implements Serializable {
 		return alias;
 	}
 
-	public int getAttrStatus() {
-		return attrStatus;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public int getOpCode() {
-		return opCode;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public int getqQNum() {
-		return qQNum;
-	}
-
-	public int getScene() {
-		return scene;
-	}
-
-	public int getSex() {
-		return sex;
-	}
-
-	public String getSignature() {
-		return signature;
-	}
-
-	public String getTicket() {
-		return ticket;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public int getVerifyFlag() {
-		return verifyFlag;
-	}
-
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+
+	public int getAttrStatus() {
+		return attrStatus;
 	}
 
 	public void setAttrStatus(int attrStatus) {
 		this.attrStatus = attrStatus;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getContent() {
+		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
 	}
 
+	public String getNickName() {
+		return nickName;
+	}
+
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public int getOpCode() {
+		return opCode;
 	}
 
 	public void setOpCode(int opCode) {
 		this.opCode = opCode;
 	}
 
+	public String getProvince() {
+		return province;
+	}
+
 	public void setProvince(String province) {
 		this.province = province;
+	}
+
+	public int getqQNum() {
+		return qQNum;
 	}
 
 	public void setqQNum(int qQNum) {
 		this.qQNum = qQNum;
 	}
 
+	public int getScene() {
+		return scene;
+	}
+
 	public void setScene(int scene) {
 		this.scene = scene;
+	}
+
+	public int getSex() {
+		return sex;
 	}
 
 	public void setSex(int sex) {
 		this.sex = sex;
 	}
 
+	public String getSignature() {
+		return signature;
+	}
+
 	public void setSignature(String signature) {
 		this.signature = signature;
+	}
+
+	public String getTicket() {
+		return ticket;
 	}
 
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public int getVerifyFlag() {
+		return verifyFlag;
 	}
 
 	public void setVerifyFlag(int verifyFlag) {

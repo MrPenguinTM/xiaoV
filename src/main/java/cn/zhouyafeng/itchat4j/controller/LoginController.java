@@ -1,8 +1,5 @@
 package cn.zhouyafeng.itchat4j.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cn.zhouyafeng.itchat4j.api.WechatTools;
 import cn.zhouyafeng.itchat4j.core.Core;
 import cn.zhouyafeng.itchat4j.service.ILoginService;
@@ -10,6 +7,8 @@ import cn.zhouyafeng.itchat4j.service.impl.LoginServiceImpl;
 import cn.zhouyafeng.itchat4j.thread.CheckLoginStatusThread;
 import cn.zhouyafeng.itchat4j.utils.SleepUtils;
 import cn.zhouyafeng.itchat4j.utils.tools.CommonTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 登陆控制器

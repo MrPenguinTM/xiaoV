@@ -28,4 +28,8 @@ public enum MsgTypeEnum {
 		return type;
 	}
 
+	@Override
+	public String toString() {
+		return getCode();
+	}
 }

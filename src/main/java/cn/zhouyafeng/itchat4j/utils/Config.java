@@ -1,11 +1,11 @@
 package cn.zhouyafeng.itchat4j.utils;
 
+import cn.zhouyafeng.itchat4j.utils.enums.OsNameEnum;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import cn.zhouyafeng.itchat4j.utils.enums.OsNameEnum;
 
 /**
  * 配置信息

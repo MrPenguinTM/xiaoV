@@ -1,48 +1,46 @@
 package cn.zhouyafeng.itchat4j;
 
-import static org.androidtest.xiaoV.data.Constant.groupList;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.androidtest.xiaoV.Config;
-import org.androidtest.xiaoV.action.Action;
-import org.androidtest.xiaoV.data.Constant;
-import org.androidtest.xiaoV.data.Group;
-import org.androidtest.xiaoV.publicutil.LogUtil;
-import org.androidtest.xiaoV.publicutil.StringUtil;
-import org.androidtest.xiaoV.publicutil.ThreadUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cn.zhouyafeng.itchat4j.controller.LoginController;
 import cn.zhouyafeng.itchat4j.core.MsgCenter;
 import cn.zhouyafeng.itchat4j.face.IMsgHandlerFace;
+import org.androidtest.robotp.Config;
+import org.androidtest.robotp.beans.group.Group;
+import org.androidtest.robotp.helper.GroupListHelper;
+import org.androidtest.robotp.publicutils.LogUtil;
+import org.androidtest.robotp.publicutils.StringUtil;
+import org.androidtest.robotp.publicutils.ThreadUtil;
+
+import java.util.concurrent.TimeUnit;
 
 public class Wechat {
-	private static final Logger LOG = LoggerFactory.getLogger(Wechat.class);
 	private IMsgHandlerFace msgHandler;
 
 	public Wechat(IMsgHandlerFace msgHandler) {
 		System.setProperty("jsse.enableSNIExtension", "false"); // 防止SSL错误
 		this.msgHandler = msgHandler;
-		LOG.info("0. 初始化群白名单和对应管理员信息");
-		Config.initGroupAndAdmin();
+		LogUtil.MSG.info("0. 初始化" + Config.dir_groups.getAbsolutePath()
+				+ "下的所有群配置文件");
+		GroupListHelper.updateGroupList();
 		// 登陆
 		LoginController login = new LoginController();
-		login.login(Constant.getOutPutPath());
+		login.login(Config.dir_home.getAbsolutePath());
 	}
 
 	private void setBoardcastListener() {
 		while (true) {
 			boolean isReported = false;
-			for (Group currentGroup : groupList) {
-				List<Action> customizedList = currentGroup.getActionList();
-				if (StringUtil.ifNotNullOrEmpty(customizedList)) {
-					for (Action customized : customizedList) {
-						boolean result = customized.notify(currentGroup);
-						if (result && isReported == false) {
-							isReported = true;
+			for (Group currentGroup : GroupListHelper.getGroupList()) {
+				if (StringUtil.ifNotNullOrEmpty(currentGroup.getGroupPlugin())) {
+					if (StringUtil.ifNotNullOrEmpty(currentGroup
+							.getGroupPlugin().getReminderPluginArray())) {
+						for (int i = 0; i < currentGroup.getGroupPlugin()
+								.getReminderPluginArray().size(); i++) {
+							boolean result = currentGroup.getGroupPlugin()
+									.getReminderPluginArray().get(i)
+									.reply(currentGroup, null);
+							if (result && isReported == false) {
+								isReported = true;
+							}
 						}
 					}
 				}
@@ -63,7 +61,7 @@ public class Wechat {
 	}
 
 	public void start() {
-		LOG.info("+++++++++++++++++++开始消息处理+++++++++++++++++++++");
+		LogUtil.MSG.info("+++++++++++++++++++开始消息处理+++++++++++++++++++++");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

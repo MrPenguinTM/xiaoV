@@ -1,23 +1,22 @@
 package cn.zhouyafeng.itchat4j.utils.tools;
 
+import cn.zhouyafeng.itchat4j.beans.BaseMsg;
+import cn.zhouyafeng.itchat4j.core.Core;
+import cn.zhouyafeng.itchat4j.utils.MyHttpClient;
+import cn.zhouyafeng.itchat4j.utils.enums.MsgTypeEnum;
+import cn.zhouyafeng.itchat4j.utils.enums.URLEnum;
+import org.androidtest.robotp.publicutils.LogUtil;
+import org.apache.http.HttpEntity;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.androidtest.xiaoV.publicutil.LogUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
-
-import cn.zhouyafeng.itchat4j.beans.BaseMsg;
-import cn.zhouyafeng.itchat4j.core.Core;
-import cn.zhouyafeng.itchat4j.utils.MyHttpClient;
-import cn.zhouyafeng.itchat4j.utils.enums.MsgTypeEnum;
-import cn.zhouyafeng.itchat4j.utils.enums.URLEnum;
 
 /**
  * 下载工具类
@@ -33,13 +32,11 @@ public class DownloadTools {
 
 	/**
 	 * 处理下载任务
-	 *
-	 * @param url
-	 * @param msgId
+	 * 
+	 * @param msg
+	 * @param type
 	 * @param path
 	 * @return
-	 * @author https://github.com/yaphone
-	 * @date 2017年4月21日 下午11:00:25
 	 */
 	public static Object getDownloadFn(BaseMsg msg, String type, String path) {
 		LogUtil.MSG.debug("getDownloadFn: " + msg + ", type: " + type
@@ -82,6 +79,8 @@ public class DownloadTools {
 			return false;
 		}
 		return null;
-	};
+	}
+
+	;
 
 }

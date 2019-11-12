@@ -21,12 +21,12 @@ public class AppInfo implements Serializable {
 		return appId;
 	}
 
-	public int getType() {
-		return type;
-	}
-
 	public void setAppId(String appId) {
 		this.appId = appId;
+	}
+
+	public int getType() {
+		return type;
 	}
 
 	public void setType(int type) {

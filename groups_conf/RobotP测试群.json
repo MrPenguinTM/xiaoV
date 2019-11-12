@@ -1,0 +1,60 @@
+{
+  "Group_name": "RobotP测试群",
+  "GroupAdmin": "Vince蔡培培;",
+  "GroupRobotConfig": {
+    "ReceiverMassMsg": true,
+    "RobotChat": true,
+    "UnknownReply": true
+  },
+  "GroupPlugin": {
+    "actionPluginArray": [
+      {
+        "matchWords": "作者博客文本形式",
+        "matchType": "TEXT",
+        "matchRule": 2,
+        "replyType": "TEXT",
+        "replyContent": "https://androidtest.org"
+      },
+      {
+        "matchWords": "作者博客文件形式",
+        "matchType": "TEXT",
+        "matchRule": 2,
+        "replyType": "MEDIA",
+        "replyContent": "data/demofile.txt"
+      },
+      {
+        "matchWords": "作者博客图片形式",
+        "matchType": "TEXT",
+        "matchRule": 2,
+        "replyType": "PIC",
+        "replyContent": "data/demopic.jpg"
+      }
+    ],
+    "reminderPluginArray": [
+      {
+        "cronTime": "* 45 10 ? * TUE",
+        "replyType": "TEXT",
+        "remindContent": "这是一条定时提醒。"
+      },
+      {
+        "cronTime": "* 45 10 ? * TUE",
+        "replyType": "PIC",
+        "remindContent": "data/demopic.jpg"
+      },
+      {
+        "cronTime": "* 18 1 ? * *",
+        "replyType": "PLUGINCODE",
+        "remindContent": "org.androidtest.robotp.plugin.PlugInCodeHelper@exerciseWeeklyReport"
+      }
+    ],
+    "ExercisePlugin": {
+      "stepClockin": 0,
+      "sportClockin": 0,
+      "wstepClockin": 0,
+      "ExercisePluginConfig": {
+        "recallSelfClockin": true,
+        "clockinOnceADay": false
+      }
+    }
+  }
+}

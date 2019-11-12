@@ -1,15 +1,9 @@
 package cn.zhouyafeng.itchat4j.api;
 
+import okhttp3.*;
+
 import java.io.File;
 import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * 辅助工具类，该类暂时未用，请忽略

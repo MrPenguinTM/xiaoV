@@ -1,11 +1,10 @@
 package cn.zhouyafeng.itchat4j.thread;
 
-import org.androidtest.xiaoV.publicutil.MailUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cn.zhouyafeng.itchat4j.core.Core;
 import cn.zhouyafeng.itchat4j.utils.SleepUtils;
+import org.androidtest.robotp.publicutils.MailUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 检查微信在线状态
